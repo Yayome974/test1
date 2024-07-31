@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokémon Details</title>
+    <style>
+      /* Ajoutez votre style CSS ici si nécessaire */
+      .details-container {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loader" style="display: none">Loading...</div>
+    <div id="pokemonContainer" class="details-container"></div>
+
+    <script>
+      async function getPokemons() {
+        const url = "https://pokebuildapi.fr/api/v1/pokemon";
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error("There was an error fetching the Pokémon data:", error);
+        }
+      }
+
+      async function displayData() {
+        try {
+          const loader = document.getElementById("loader");
+          loader.style.display = "block";
+
+          const data = await getPokemons();
+
+          if (!data) {
+            alert("Aucune donnée !");
+            loader.style.display = "none";
+            return null;
+          }
+
+          const container = document.getElementById("pokemonContainer");
+
+          for (let index = 0; index < data.length; index += 1) {
+            const pokemon = data[index];
+
+            const pokemonDiv = document.createElement("div");
+            pokemonDiv.className = "details";
+
+            const pokemonNameHeader = document.createElement("h3");
+            pokemonNameHeader.textContent = `Nom du pokémon : ${pokemon.name}`;
+
+            const pokemonHpHeader = document.createElement("p");
+            pokemonHpHeader.textContent = `Points de vie : ${pokemon.stats.HP}`;
+
+            const pokemonAttackHeader = document.createElement("p");
+            pokemonAttackHeader.textContent = `Attaque : ${pokemon.stats.attack}`;
+
+            const pokemonDefenseHeader = document.createElement("p");
+            pokemonDefenseHeader.textContent = `Défense : ${pokemon.stats.defense}`;
+
+            const pokemonTypesHeader = document.createElement("p");
+            pokemonTypesHeader.textContent = `Types : ${pokemon.apiTypes
+              .map((type) => type.name)
+              .join(", ")}`;
+
+            const pokemonImg = document.createElement("img");
+            pokemonImg.src = pokemon.image;
+            pokemonImg.style.width = "150px";
+            pokemonImg.style.cursor = "pointer";
+
+            pokemonImg.addEventListener("click", () => {
+              showPokemonDetails(pokemon);
+            });
+
+            pokemonDiv.appendChild(pokemonNameHeader);
+            pokemonDiv.appendChild(pokemonImg);
+            pokemonDiv.appendChild(pokemonHpHeader);
+            pokemonDiv.appendChild(pokemonAttackHeader);
+            pokemonDiv.appendChild(pokemonDefenseHeader);
+            pokemonDiv.appendChild(pokemonTypesHeader);
+
+            container.appendChild(pokemonDiv);
+          }
+
+          loader.style.display = "none";
+        } catch (error) {
+          console.log("Error fetching Pokémon data:", error);
+          alert("Failed to fetch Pokémon data.");
+        }
+      }
+
+      function showPokemonDetails(pokemon) {
+        alert(`Détails du Pokémon :
+            Nom: ${pokemon.name}
+            Points de vie: ${pokemon.stats.HP}
+            Attaque: ${pokemon.stats.attack}
+            Défense: ${pokemon.stats.defense}
+            Types: ${pokemon.apiTypes.map((type) => type.name).join(", ")}`);
+      }
+
+      // Appel de la fonction pour afficher les données des Pokémon
+      displayData();
+    </script>
+  </body>
+</html>
