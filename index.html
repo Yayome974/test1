@@ -1,81 +1,113 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Inconsolata:wght@200..900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- <link rel="stylesheet" href="./css/reset.css" /> -->
-    <link rel="stylesheet" href="style.css" />
-    <title>Pokédex</title>
-  </head>
-  <body>
-    <script src="pokemon.js"></script>
-    <div id="pokeball">
-      <h1>Pokédex</h1>
-      <img src="Poké_Ball_icon.svg.png" alt="pokeball" />
-    </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Site</title>
+  <style>
+    /* Style des onglets */
+    .tablink {
+      background-color: #f1f1f1;
+      border: none;
+      padding: 14px 16px;
+      cursor: pointer;
+      font-size: 17px;
+      display: inline-block;
+    }
 
-    <head>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Angkor&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Train+One&display=swap"
-        rel="stylesheet"
-      />
-    </head>
+    .tablink:hover {
+      background-color: #ddd;
+    }
 
-    <head><link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet"></head>
+    /* Contenu des onglets */
+    .tabcontent {
+      display: none;
+      padding: 20px;
+      border-top: none;
+      margin-top: 20px;
+      background-color: #f9f9f9;
+    }
 
-    <main></main>
-    <button class="Get" onclick="displayData()" >Get pokémons</button>
-    <div id="loader" style="display: none">Chargement en cours...</div>
-    <div id="pokemonContainer"></div>
-  </body>
+    .active {
+      background-color: #ccc;
+    }
 
+    /* Style pour la page */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
 
-  <span class="filtre"></span>
-  <span class="Interieur-du-cadre">Filtre :</span>
-</html>
+    h1 {
+      text-align: center;
+    }
 
+    .programme {
+      list-style-type: none;
+    }
 
-      <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Bouton de Redirection</title>
-      </head>
-      <body>
-        <button id="monBouton" class = "boutons">Par puissance</button>
+    .programme li {
+      margin: 10px 0;
+    }
 
-        <script>
-          // Fonction appelée lors du clic sur le bouton
-          function redirigerVersFichier() {
-            // Spécifiez le chemin de votre fichier ici
-            var cheminFichier =
-              "file:///C:/Users/Guillaume/Desktop/Test%20Dev/pokemon/index2.html";
+    .programme input {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
 
-            // Rediriger vers le fichier
-            window.location.href = cheminFichier;
-          }
+  <h1>Mon Suivi de Sport</h1>
 
-          // Associer la fonction au clic sur le bouton
-          document
-            .getElementById("monBouton")
-            .addEventListener("click", redirigerVersFichier);
-        </script>
-      </body>
-    </html>
-  </body>
-</html>
+  <!-- Onglets -->
+  <div class="tabs">
+    <button class="tablink" onclick="openTab(event, 'Programme')">Programme</button>
+    <button class="tablink" onclick="openTab(event, 'Avancee')">Avancée</button>
+  </div>
+
+  <!-- Contenu des onglets -->
+  <div id="Programme" class="tabcontent">
+    <h2>Mon Programme de Sport</h2>
+    <ul class="programme">
+      <li>
+        <input type="checkbox" id="exercice1">
+        <label for="exercice1">Exercice 1 : Pompes</label>
+      </li>
+      <li>
+        <input type="checkbox" id="exercice2">
+        <label for="exercice2">Exercice 2 : Squats</label>
+      </li>
+      <li>
+        <input type="checkbox" id="exercice3">
+        <label for="exercice3">Exercice 3 : Abdos</label>
+      </li>
+    </ul>
+  </div>
+
+  <div id="Avancee" class="tabcontent">
+    <h2>Mon Avancée</h2>
+    <p>Voici l'avancée de mon programme de sport :</p>
+    <p>Pompes : 30 / 100</p>
+    <p>Squats : 25 / 100</p>
+    <p>Abdos : 20 / 100</p>
+  </div>
+
+  <script>
+    function openTab(evt, tabName) {
+      var i, tabcontent, tablinks;
+
+      // Masquer toutes les sections
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+
+      // Supprimer la classe "active" de tous les onglets
+      tablinks = document.getElementsByClassName("tablink");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].classList.remove("active");
+      }
+
+      // Afficher la section correspondante à l'onglet et ajouter la classe "active" à l'onglet
+      document.getElementById(tabName).style.display = "block";
+     
