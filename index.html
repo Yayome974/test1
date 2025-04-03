@@ -110,4 +110,12 @@
 
       // Afficher la section correspondante à l'onglet et ajouter la classe "active" à l'onglet
       document.getElementById(tabName).style.display = "block";
-     
+      evt.currentTarget.classList.add("active");
+    }
+
+    // Par défaut, afficher l'onglet "Programme"
+    document.getElementsByClassName("tablink")[0].click();
+  </script>
+
+</body>
+</html>
